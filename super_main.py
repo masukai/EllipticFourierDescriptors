@@ -3,7 +3,7 @@ import os
 
 
 def main():  # ディレクトリの構造上必要なメイン関数
-    super_folder = ["20DAS", "25DAS", "29DAS"]
+    super_folder = ["test1", "test2", "test3"]
 
     process = int(input(
         "Select process\n 3: All process\n 2: Only before PCA\n 1: Only after Fourier\n Others: None\n"))

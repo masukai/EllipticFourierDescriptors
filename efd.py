@@ -12,7 +12,8 @@ import csv
 
 
 def main(process):  # メイン関数
-    folder = ["R24B0", "R12B12", "R0B24", "RB24", "RB12"]  # 実験条件
+    folder = ["condition1", "condition2", "condition3",
+              "condition4", "condition5"]  # 実験条件
     labelcolor = ["red", "purple", "blue", "black", "gray"]
 
     if __name__ != 'efd':
