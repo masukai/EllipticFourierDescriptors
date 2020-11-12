@@ -65,7 +65,7 @@ def main(process):  # メイン関数
 
 
 def main_procedure(now_folder):  # 工程1
-    my_jpg_list = glob.glob("*.JPG")  # JPGの探索とループ
+    my_jpg_list = glob.glob("*.jpg")  # JPGの探索とループ
     for my_file in my_jpg_list:  # 画像からフーリエ係数の導出と正規化まで
         file_name = "{0}_{1}".format(now_folder, my_file[:-4])
         img = cv2.imread(my_file)
