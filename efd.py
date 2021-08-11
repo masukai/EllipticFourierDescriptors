@@ -14,9 +14,8 @@ import csv
 
 
 def main(process):  # メイン関数
-    folder = ["condition1", "condition2", "condition3",
-              "condition4", "condition5"]  # 実験条件
-    labelcolor = ["red", "purple", "blue", "black", "gray"]
+    folder = ["cond1", "cond2", "cond3"]  # 実験条件
+    labelcolor = ["red", "purple", "blue"]
 
     if __name__ != 'efd':
         process = int(input(
