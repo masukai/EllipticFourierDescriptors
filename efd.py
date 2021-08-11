@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf8 -*-
 import os
 import glob
 import cv2
@@ -62,6 +64,7 @@ def main(process):  # メイン関数
         coefficient_procedure(np_pca_dataset, len_list,
                               folder, labelcolor)  # 通常コメントアウト
         print("=====*fin*_PCA=====")
+    return
 
 
 def main_procedure(now_folder):  # 工程1
@@ -102,6 +105,7 @@ def main_procedure(now_folder):  # 工程1
 
         print("-----*fin*_" + file_name + "-----")
         os.chdir("../")
+    return
 
 
 def matrix_procedure(now_folder, N, M):  # 必要なデータをcsvから持ってきて行列にする
@@ -134,7 +138,6 @@ def matrix_procedure(now_folder, N, M):  # 必要なデータをcsvから持っ�
 
         print("-----*fin*_" + dirfile1 + "-----")
         os.chdir("../")
-
     return np_dataset
 
 
@@ -220,7 +223,6 @@ def pca_procedure(np_pca_dataset, len_list, N, conditions):  # 工程2 標準化
         # plt.savefig("IFT_{0}.png".format(conditions), dpi=240, bbox_inches='tight', pad_inches=0.1)  # 誤差なし
         plt.pause(0.5)  # 計算速度を上げる場合はコメントアウト
         plt.clf()
-
     return
 
 
@@ -374,7 +376,6 @@ def coefficient_procedure(np_pca_dataset, len_list, folder, labelcolor):  # フ�
     plt.savefig("TFC.png", dpi=360, bbox_inches='tight', pad_inches=0.1)
     plt.pause(0.5)  # 計算速度を上げる場合はコメントアウト
     plt.clf()
-
     return
 
 
@@ -435,6 +436,7 @@ class division:  # リスト内を微分して分割
                 self.np_time_cal[i], self.np_y_cal[i], "time", "Y Axis", "TY")
 
             os.chdir("../")
+        return
 
 
 class draw_contours:  # 色調に差があり、輪郭になる場合HSVに変換>>>2値化して判別
@@ -456,6 +458,7 @@ class draw_contours:  # 色調に差があり、輪郭になる場合HSVに変�
         self.dst = self.img[200:height - 100, 50:width - 50]  # トリミングの大きさ
         dst = save_action(self.file_name, "dst")
         dst.save_img(self.dst)
+        return
 
     def back_revision(self):  # 背景のグラデーションを直す 20201105
         lab = cv2.cvtColor(self.dst, cv2.COLOR_BGR2LAB)  # G BRからLABに変換
@@ -467,16 +470,19 @@ class draw_contours:  # 色調に差があり、輪郭になる場合HSVに変�
         self.bgr = cv2.cvtColor(lab, cv2.COLOR_LAB2BGR)  # LABからBGRに変換
         bgr = save_action(self.file_name, "bgr")
         bgr.save_img(self.bgr)
+        return
 
     def hsv_transration(self):  # 色調変換
         self.hsv = cv2.cvtColor(self.bgr, cv2.COLOR_BGR2HSV)
         hsv = save_action(self.file_name, "hsv")
         hsv.save_img(self.hsv)
+        return
 
     def gauss_transration(self):  # ガウス変換
         self.gauss = cv2.GaussianBlur(self.hsv, (15, 15), 3)  # フィルタの大きさ
         gauss = save_action(self.file_name, "gauss")
         gauss.save_img(self.gauss)
+        return
 
     def hsv_binary(self):  # HSV制限2値化
         lower = np.array([22, 100, 90])  # 下限 32 32 90
@@ -484,6 +490,7 @@ class draw_contours:  # 色調に差があり、輪郭になる場合HSVに変�
         self.img_HSV = cv2.inRange(self.gauss, lower, upper)
         img_HSV = save_action(self.file_name, "img_HSV")
         img_HSV.save_img(self.img_HSV)
+        return
 
     def contour_extraction(self):  # 輪郭抽出
         contours, hierarchy = cv2.findContours(
@@ -503,6 +510,7 @@ class draw_contours:  # 色調に差があり、輪郭になる場合HSVに変�
                         self.y_list.append(elem * (-1))
         boundingbox = save_action(self.file_name, "boundingbox")
         boundingbox.save_img(self.boundingbox)
+        return
 
     def graph_and_csv(self):  # graph & csv
         obj_graph = draw_graph(
@@ -511,6 +519,7 @@ class draw_contours:  # 色調に差があり、輪郭になる場合HSVに変�
 
         obj_csv = save_action(self.file_name, "contours")  # csvに保存
         obj_csv.save_csv_1lists([self.x_list, self.y_list])
+        return
 
 
 class draw_graph:  # グラフの描画
@@ -527,6 +536,7 @@ class draw_graph:  # グラフの描画
         self.ax.set_aspect('equal', adjustable='box')
         graph = save_action(self.file_name + "_contours", None)
         graph.save_graph()
+        return
 
     def graph(self):  # グラフ描画の基本を集約
         self.ax.set_title(self.file_name, fontsize=14)
@@ -534,6 +544,7 @@ class draw_graph:  # グラフの描画
                         color="red", label=self.file_name)
         self.ax.plot(self.x_list, self.y_list, linewidth=1)
         plt.grid(which='major')
+        return
 
 
 class draw_graph_multi(draw_graph):  # グラフの描画を継承 複数のデータ>>>1枚
@@ -563,6 +574,7 @@ class draw_graph_multi(draw_graph):  # グラフの描画を継承 複数のデ�
             plt.legend()
         graph = save_action(self.file_name, None)
         graph.save_graph()
+        return
 
 
 class draw_graph_XY_tX_tY(draw_graph):  # グラフの描画を継承 3軸を2軸で表現
@@ -588,6 +600,7 @@ class draw_graph_XY_tX_tY(draw_graph):  # グラフの描画を継承 3軸を2�
             # plt.xlim([-3.5, 3.5])
         graph = save_action(self.file_name, None)
         graph.save_graph()
+        return
 
 
 class fourier:  # フーリエ級数展開
@@ -637,6 +650,7 @@ class fourier:  # フーリエ級数展開
             self.file_name, self.i, "fourier_{0}_frequencyLog".format(self.N))  # グラフ化
         obj_frr_graph.multi_graph(
             self.np_n_ver, self.np_AB_set, name_AB_set, "n Frequency", "Intensity")
+        return
 
     def fourier_cal(self, np_f):  # cosの係数Aとsinの係数B
         ftcos = np_f * np.cos(2 * self.pi * self.np_n * self.np_t / self.T)
@@ -658,6 +672,7 @@ class fourier:  # フーリエ級数展開
                 self.np_t, np_fx, "time", "X Axis", "TX")
             obj_fourier_graph.single_graph(
                 self.np_t, np_fy, "time", "Y Axis", "TY")
+        return
 
     def integral(self, f):  # 台形則で積分 sigma(fdt)
         del_f = f[0:, 1:] + f[0:, :-1]
@@ -674,12 +689,14 @@ class save_action:  # 保存動作を集約
         with open("{0}_{1}.csv".format(self.file_name, self.save_name), "w") as f:
             writer = csv.writer(f, lineterminator="\n")
             writer.writerow(list)
+        return
 
     def save_csv_1list_1lists(self, list, lists):  # list1つ lists1つ csv
         with open("{0}_{1}.csv".format(self.file_name, self.save_name), "w") as f:
             writer = csv.writer(f, lineterminator="\n")
             writer.writerow(list)
             writer.writerows(lists)
+        return
 
     def save_csv_1list_2lists(self, list, fx_lists, fy_lists):  # list1つ lists2つ csv
         with open("{0}_{1}.csv".format(self.file_name, self.save_name), "w") as f:
@@ -689,11 +706,13 @@ class save_action:  # 保存動作を集約
             writer.writerows(fx_lists)
             writer.writerow("\n")
             writer.writerows(fy_lists)
+        return
 
     def save_csv_1lists(self, lists):  # lists1つのみ csv
         with open("{0}_{1}.csv".format(self.file_name, self.save_name), "w") as f:
             writer = csv.writer(f, lineterminator="\n")
             writer.writerows(lists)
+        return
 
     # lists3つ t_list x_list y_list csv
     def save_csv_3lists(self, t_lists, x_lists, y_lists):
@@ -704,16 +723,19 @@ class save_action:  # 保存動作を集約
             writer.writerows(x_lists)
             writer.writerow("\n")
             writer.writerows(y_lists)
+        return
 
     def save_graph(self):  # グラフの保存
         plt.savefig("{0}.png".format(self.file_name), dpi=240,
                     bbox_inches='tight', pad_inches=0.1)
         # plt.pause(0.3)  # 計算速度を上げる場合はコメントアウト
         plt.clf()
+        return
 
     def save_img(self, image):  # 画像の保存
         cv2.imwrite("{0}_{1}.jpg".format(
             self.file_name, self.save_name), image)
+        return
 
 
 class standardization:  # fourierの後の標準化
@@ -781,6 +803,7 @@ class standardization:  # fourierの後の標準化
             np_phi, buffer_cal) / self.E
         if (self.np_AB_std[0, 0] < -0.5):  # a1で逆位相の修正
             self.np_AB_std *= -1
+        return
 
     def coefficient_graph(self):  # フーリエ係数確認のために描画
         name_AB_set = ["x_cos", "x_sin", "y_cos", "y_sin"]
@@ -788,6 +811,7 @@ class standardization:  # fourierの後の標準化
             self.file_name, self.i, "std_{0}_frequencyLog".format(self.N))  # グラフ化
         obj_frr_graph.multi_graph(
             self.np_n_ver, self.np_AB_std, name_AB_set, "n Frequency", "Intensity")
+        return
 
     def corrected_size(self):
         cos_theta = np.cos(self.theta)
@@ -798,6 +822,7 @@ class standardization:  # fourierの後の標準化
         self.a1_1 = np_size[0, 0]
         self.c1_1 = np_size[2, 0]
         self.E = np.sqrt(self.a1_1 ** 2 + self.c1_1 ** 2)
+        return
 
     def corrected_start(self):
         numer = 2 * (self.np_AB1[0, 0] * self.np_AB1[1,
@@ -809,6 +834,7 @@ class standardization:  # fourierの後の標準化
             self.theta -= self.pi / 2.0
         elif (self.theta < -1 * self.pi / 2.0):
             self.theta += self.pi / 2.0
+        return
 
     def fourier_graph(self):  # フーリエ級数展開確認のために描画
         for j in self.N_set:
@@ -822,6 +848,7 @@ class standardization:  # fourierの後の標準化
                 self.np_t, np_fx, "time", "X Axis", "TX")
             obj_fourier_graph.single_graph(
                 self.np_t, np_fy, "time", "Y Axis", "TY")
+        return
 
     def matrix_multiplication(self, np_A, np_B):  # 2*2の行列積を縦ベクトルや行列で返す 2次元
         return np_A[[0, 0, 2, 2]] * np_B[[0, 1, 0, 1]] + np_A[[1, 1, 3, 3]] * np_B[[2, 3, 2, 3]]
@@ -832,6 +859,7 @@ class standardization:  # fourierの後の標準化
             self.theta -= self.pi / 2.0
             self.corrected_size()
             self.rotation()
+        return
 
 
 if __name__ == '__main__':
