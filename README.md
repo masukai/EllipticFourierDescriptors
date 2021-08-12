@@ -6,7 +6,7 @@ This **EllipticFourierDescriptors** can calculate something's average shape in p
 
 - Numpy (1.19.5)
 - OpenCV2 (4.5.1)
-- (Matplotlib (3.1.1))
+- Matplotlib (3.1.1)
 
 ## Install
 
@@ -14,7 +14,7 @@ This **EllipticFourierDescriptors** can calculate something's average shape in p
 git clone https://github.com/masukai/EllipticFourierDescriptors.git
 ```
 
-If you do not install Python 3, Numpy and OpenCV2, please install them, following below.
+If you do not install Python 3, Numpy, OpenCV2 and Matplotlib, please install them, following below.
 
 - [Python 3](https://www.python.org/downloads/)
 - Numpy, OpenCV2 and Matplotlib
@@ -36,3 +36,11 @@ If you need "(3)" to use Python 3, not Python 2, please add it.
 
 - This program has been checked by MacOS 11.5 (2021.08.11).
   If you find some bugs, please tell me about them.
+
+---
+
+## Explanation of the contents of the program
+
+### CLASS
+
+### FUNCTION
