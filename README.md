@@ -1,3 +1,7 @@
+This document was written by Kaito Masuda (masukai9612kf@gmail.com)
+
+---
+
 # EllipticFourierDescriptors
 
 This **EllipticFourierDescriptors** can calculate something's average shape in pictures in each directory (such as cond1, cond2 and cond3) by Python 3 (3.8.6).
